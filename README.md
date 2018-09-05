@@ -1,6 +1,4 @@
-### AWSのEC2でDockerを使ってWordPressを立ち上げる。
-
-docker-composeを使って、WordPressを立ち上げてみようと思います。
+## AWSのEC2でDockerを使ってWordPressを立ち上げる。
 
 #### AWS EC2の立ち上げ
 コンソール上からインスタンスを立ち上げ
