@@ -8,10 +8,10 @@ OSはAWSのLinuxを利用
 下記コマンドでインスタンスにログイン
 
 ```
-$ ssh -i <<キーペア>> ec2-user@<<パブリックIPアドレス or パブリックDNS>>
+$ ssh -i "key-pair" ec2-user@<<public ip or public DNS>>
 ```
 #### Dockerのインストール
-インストール&起動
+インストールと起動
 
 ```
 $ sudo apt-get update
@@ -30,7 +30,7 @@ $ sudo service docker status
  
  ```
    
-#### dockerグループにec2-userを追加
+#### dockerグループにec2-userを追加。
 
 ```
 $ sudo usermod -a -G docker $User
@@ -39,9 +39,9 @@ docker:x:116:
 
 ```
 
-#### docker-composeのインストール
+#### docker-composeのインストール。
 
-公式ドキュメントにある通り、curlでインストール
+公式ドキュメントにある通りcurlでインストール
 
 ```
 $ curl -L "https://github.com/docker/compose/releases/download/1.9.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
@@ -50,7 +50,7 @@ $ docker-compose --version
 docker-compose version 1.9.0, build 2585387
 ```
 
-#### WordPressを立ち上げるため、Dockerfileを作成
+#### WordPressを立ち上げるため、Dockerfileを作成。
 
 ```
 # Dockerイメージの取得
@@ -86,7 +86,7 @@ Successfully built b5937066eefa
 
 $ docker images
 REPOSITORY          TAG                 IMAGE ID            CREATED              SIZE
-data-only           latest              b5937066eefa        About a minute ago   1.095 MB
+wordpress           latest              b5937066eefa        About a minute ago   1.095 MB
 busybox             latest              1efc1d465fd6        2 weeks ago          1.095 MB
 ```
 
@@ -103,18 +103,17 @@ CONTAINER ID        IMAGE               COMMAND             CREATED             
 3fb730b66d6e        wordpress           "sh"                36 seconds ago      Exited (0) 26 seconds ago                       data-only
 ```
 
-#### WebサーバとDBサーバのコンテナ作成
+#### WebサーバとDBサーバのコンテナ作成。
 
 WordPress構築のため、下記2つのコンテナを生成します。
 
-Webサーバ (web-serverコンテナ)
-WordPressのFEサーバでユーザからのリクエストを受ける処理を担う ポートは80番
+Webサーバコンテナ (web-serverコンテナ)
 WordPressイメージを使うが、内部的にはApacheとPHPで動作している
-次のDBサーバとデータ連携する
-DBサーバ (db-serverコンテナ)
+DBサーバコンテナ (db-serverコンテナ)
 MySQLイメージを使う
 Webサーバからのデータ処理を受け付ける
-docker-composerの設定
+
+#### docker-composerの設定
 
 #### docker-compose.ymlの作成。
 
@@ -160,11 +159,11 @@ $ docker-compose stop
 $ docker-compose restart
 $ docker-compose rm
 ```
-### バックアップ
+#### バックアップ
 
 $ docker export data-only > backup.tar
 
-### リストア
+#### リストア
 $ tar xvf backup.tar
 
-=================================================================================
+
